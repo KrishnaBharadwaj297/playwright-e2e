@@ -10,6 +10,7 @@
     "test:visual:approve": "cross-env UPDATE_SNAPSHOTS=true cucumber-js",
     "report": "ts-node src/utils/generate_report.ts",
     "report:allure": "allure serve reports/allure-results",
+    "report:roi": "ts-node src/utils/RoiReporter.ts",
     "notify": "ts-node src/utils/notify.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",

@@ -1,0 +1,8 @@
+{
+    "manualTimePerTestMinutes": 10,
+    "testerHourlyRateUSD": 50,
+    "cloudInfraCostPerMinuteUSD": 0.008,
+    "bugLeakageCostUSD": 500,
+    "bugDetectionCostUSD": 50,
+    "currencySymbol": "$"
+}

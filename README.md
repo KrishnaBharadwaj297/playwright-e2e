@@ -94,11 +94,17 @@ We use a robust manual comparison (backed by `pixelmatch` and `pngjs`) to ensure
   ```
   This will update the baseline images in `snapshots/`.
 
-### 6. Advanced Accessibility
-Our `AxeHelper` goes beyond simple checks:
-- **Scoring**: Calculates a compliance score (0-100) based on violation impact.
-- **Steps**: `Then The page accessibility score should be above 95`
-- **Fix Suggestions**: detailed logs with help URLs for every violation.
+### 7. ROI & Cost Tracking
+Calculate the business value of your automation with our built-in ROI calculator.
+1.  **Configure**: Edit `roi-config.json` with your project's rates (Manual time per test, Hourly rate, etc.).
+2.  **Run Tests**: `npm test`
+3.  **Generate Report**: `npm run report:roi`
+4.  **View Dashboard**: Open `reports/roi_dashboard.html` to see:
+    - Time Saved
+    - Cost Savings
+    - Bug Prevention Value
+    - Efficiency Improvements
+
 
 
 
