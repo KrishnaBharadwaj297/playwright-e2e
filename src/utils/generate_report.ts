@@ -8,12 +8,12 @@ const options: reporter.Options = {
     scenarioTimestamp: true,
     launchReport: false,
     metadata: {
-        "App Version": "1.0.0",
-        "Test Environment": "STAGING",
-        "Browser": "Chrome/Playwright",
-        "Platform": "GitLab CI",
-        "Parallel": "Scenarios",
-        "Executed": "Remote"
+        'App Version': '1.0.0',
+        'Test Environment': 'STAGING',
+        Browser: 'Chrome/Playwright',
+        Platform: 'GitLab CI',
+        Parallel: 'Scenarios',
+        Executed: 'Remote'
     }
 };
 

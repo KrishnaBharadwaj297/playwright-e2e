@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { ICustomWorld } from '../support/CustomWorld';
 import { Logger } from '../utils/Logger';
 

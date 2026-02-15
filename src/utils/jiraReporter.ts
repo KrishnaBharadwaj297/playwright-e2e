@@ -27,7 +27,9 @@ export const createJiraTicket = async () => {
                 const steps = scenario.steps;
                 const failedStep = steps.find((step: any) => step.result.status === 'failed');
                 if (failedStep) {
-                    failures.push(`Scenario: ${scenario.name}\nFeature: ${feature.name}\nError: ${failedStep.result.error_message?.substring(0, 200)}...`);
+                    failures.push(
+                        `Scenario: ${scenario.name}\nFeature: ${feature.name}\nError: ${failedStep.result.error_message?.substring(0, 200)}...`
+                    );
                 }
             });
         });
@@ -50,20 +52,19 @@ export const createJiraTicket = async () => {
                 summary: summary,
                 description: description,
                 issuetype: {
-                    name: "Bug" // Ensure 'Bug' issue type exists in the project
+                    name: 'Bug' // Ensure 'Bug' issue type exists in the project
                 }
             }
         };
 
         const response = await axios.post(`${baseUrl}/rest/api/2/issue`, payload, {
             headers: {
-                'Authorization': `Basic ${auth}`,
+                Authorization: `Basic ${auth}`,
                 'Content-Type': 'application/json'
             }
         });
 
         console.log(`Jira ticket created successfully: ${response.data.key} (${baseUrl}/browse/${response.data.key})`);
-
     } catch (error: any) {
         console.error('Failed to create Jira ticket:', error.response?.data || error.message);
     }

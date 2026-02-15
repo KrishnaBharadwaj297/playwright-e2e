@@ -8,7 +8,16 @@
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
     "report": "ts-node src/utils/generate_report.ts",
-    "notify": "ts-node src/utils/notify.ts"
+    "notify": "ts-node src/utils/notify.ts",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -21,11 +30,19 @@
     "@types/cucumber-html-reporter": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
     "allure-cucumberjs": "^3.4.5",
     "cross-env": "^10.1.0",
     "cucumber-html-reporter": "^7.2.0",
     "dotenv": "^17.3.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "fs-extra": "^11.3.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },

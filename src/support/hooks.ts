@@ -2,9 +2,7 @@ import { Before, After, BeforeAll, AfterAll, AfterStep, Status, setDefaultTimeou
 
 setDefaultTimeout(60 * 1000);
 import { chromium, firefox, webkit, Browser } from '@playwright/test';
-import { CustomWorld } from './CustomWorld';
 import { ICustomWorld } from './CustomWorld';
-import fs from 'fs-extra';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -49,7 +47,7 @@ AfterStep(async function (this: ICustomWorld, scenario) {
                 path: screenshotPath,
                 fullPage: true
             });
-            this.attach(buffer, "image/png");
+            this.attach(buffer, 'image/png');
             Logger.error(`Screenshot saved to: ${screenshotPath}`);
         }
     }

@@ -57,7 +57,6 @@ export const sendSlackNotification = async () => {
 
         await axios.post(webhookUrl, payload);
         console.log('Slack notification sent successfully.');
-
     } catch (error) {
         console.error('Failed to send Slack notification:', error);
     }

@@ -25,7 +25,7 @@ Then('I should see the heading containing {string}', async function (this: ICust
 });
 
 Then('The page should be accessible', async function (this: ICustomWorld) {
-    if (!this.page) throw new Error("Page not initialized");
+    if (!this.page) throw new Error('Page not initialized');
     const violations = await AxeHelper.checkAccessibility(this.page);
     if (violations.length > 0) {
         this.attach(JSON.stringify(violations, null, 2), 'application/json');
@@ -35,8 +35,11 @@ Then('The page should be accessible', async function (this: ICustomWorld) {
     console.log(`Found ${violations.length} accessibility violations.`);
 });
 
-Then('I verify the API {string} returns {int}', async function (this: ICustomWorld, endpoint: string, statusCode: number) {
-    if (!this.api) throw new Error("API not initialized");
-    const response = await this.api.get(endpoint);
-    expect(response.status()).toBe(statusCode);
-});
+Then(
+    'I verify the API {string} returns {int}',
+    async function (this: ICustomWorld, endpoint: string, statusCode: number) {
+        if (!this.api) throw new Error('API not initialized');
+        const response = await this.api.get(endpoint);
+        expect(response.status()).toBe(statusCode);
+    }
+);

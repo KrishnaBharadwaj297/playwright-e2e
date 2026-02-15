@@ -1,3 +1,4 @@
+
 # Playwright BDD TypeScript Automation Framework
 
 A robust, plug-and-play testing framework using **Playwright**, **Cucumber**, and **TypeScript**. 
@@ -196,5 +197,90 @@ This runs flawlessly using the **Universal Steps** without needing custom code f
 - [x] **Documentation & Finalize**
     - [x] Update `README.md` with comprehensive instructions
     - [x] Verify execution locally with new scenarios
+
+
+
+
+- [x] **Advanced Logging**
+    - [x] Install `winston`
+    - [x] Create `src/utils/Logger.ts`
+    - [x] Integrate Logger into `BasePage.ts`
+    - [x] Integrate Logger into `hooks.ts`
+
+## Technical Guide
+
+### 1. Environment Management
+We use `dotenv` for managing environments.
+1.  Create `.env` file (copy from `.env.example`).
+2.  Set `BASE_URL`, `API_KEY`, etc.
+3.  Access in code via `process.env.BASE_URL`.
+
+**Best Practice**: Never commit `.env` to Git. Use CI/CD secrets for production values.
+
+### 2. Error Handling & Retries
+- **Retries**: Configured in `cucumber.js` (default: 0). To enable retries for flaky tests, update the `retry` option:
+  ```javascript
+  // cucumber.js
+  retry: 1
+  ```
+- **Screenshots**: Automatically captured on failure via `hooks.ts`.
+- **Logs**: Check `reports/logs/execution.log` for stack traces and detailed execution flow.
+
+### 3. Architecture
+#### 3.1 Component Diagram
+```mermaid
+graph TD
+    A[Test Runner (Cucumber)] --> B[Feature Files (.feature)]
+    B --> C[Step Definitions (.ts)]
+    C --> D[Page Objects (POM)]
+    D --> E[Playwright (Browser Control)]
+    C --> F[Custom World (Ctx/Verify)]
+    G[Utils] --> H[Logger]
+    G --> I[Reporters]
+    G --> J[Axe (Accessibility)]
+```
+
+#### 3.2 Test Execution Flow
+```mermaid
+sequenceDiagram
+    participant User
+    participant Run as npm test
+    participant Hooks
+    participant Browser
+    participant Steps
+    
+    User->>Run: Execute Command
+    Run->>Hooks: BeforeAll (Launch Browser)
+    Hooks->>Browser: Launch Chromium/Firefox/WebKit
+    
+    loop Every Scenario
+        Run->>Hooks: Before (Create Context)
+        Hooks->>Browser: New Context & Page
+        Run->>Steps: Execute Given/When/Then
+        Steps->>Browser: Perform Actions / Assertions
+        
+        alt Step Failed
+            Steps-->>Hooks: Error
+            Hooks->>Browser: Take Screenshot
+            Hooks->>Run: Attach Screenshot to Report
+        end
+        
+        Run->>Hooks: After (Cleanup)
+        Hooks->>Browser: Close Page & Context
+    end
+    
+    Run->>Hooks: AfterAll (Close Browser)
+    Hooks->>Browser: Close Instance
+    Run-->>User: Generate JSON Report
+```
+
+
+### 4. Code Quality
+- **Linting**: `npm run lint` (ESLint)
+- **Formatting**: `npm run format` (Prettier)
+- **Pre-commit**: Husky ensures code quality before commit.
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 
