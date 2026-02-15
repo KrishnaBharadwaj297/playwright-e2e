@@ -26,13 +26,13 @@ Then('I should see the heading containing {string}', async function (this: ICust
 
 Then('The page should be accessible', async function (this: ICustomWorld) {
     if (!this.page) throw new Error('Page not initialized');
-    const violations = await AxeHelper.checkAccessibility(this.page);
-    if (violations.length > 0) {
-        this.attach(JSON.stringify(violations, null, 2), 'application/json');
+    const result = await AxeHelper.checkAccessibility(this.page);
+    if (result.violations.length > 0) {
+        this.attach(JSON.stringify(result.violations, null, 2), 'application/json');
     }
     // We can assert here, or just log. For robust framework, you might want to soft assert or warn.
     // expect(violations.length).toBe(0); // Uncomment to fail on a11y issues
-    console.log(`Found ${violations.length} accessibility violations.`);
+    console.log(`Found ${result.violations.length} accessibility violations.`);
 });
 
 Then(

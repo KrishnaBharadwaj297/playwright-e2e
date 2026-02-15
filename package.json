@@ -7,7 +7,9 @@
     "test:chromium": "cross-env BROWSER=chromium cucumber-js",
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
+    "test:visual:approve": "cross-env UPDATE_SNAPSHOTS=true cucumber-js",
     "report": "ts-node src/utils/generate_report.ts",
+    "report:allure": "allure serve reports/allure-results",
     "notify": "ts-node src/utils/notify.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
@@ -47,7 +49,11 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@types/pixelmatch": "^5.2.6",
+    "@types/pngjs": "^6.0.5",
     "axios": "^1.13.5",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
     "winston": "^3.19.0"
   }
 }

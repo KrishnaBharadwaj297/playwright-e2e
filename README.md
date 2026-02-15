@@ -84,6 +84,23 @@ We have included a dedicated example in `features/api.feature` and `src/steps/ap
 - **POST Request**: `When I send a POST request to "URL" with body:`
 - **Validation**: `Then the response status should be {int}`
 
+### 5. Advanced Visual Testing
+We use a robust manual comparison (backed by `pixelmatch` and `pngjs`) to ensure visual consistency.
+- **Full Page**: `Then I verify the full page visual snapshot named "home_page"`
+- **Component**: `Then I verify the visual snapshot of component ".header" named "header"`
+- **Approving Changes**: If the UI changes intentionally, run:
+  ```bash
+  npm run test:visual:approve
+  ```
+  This will update the baseline images in `snapshots/`.
+
+### 6. Advanced Accessibility
+Our `AxeHelper` goes beyond simple checks:
+- **Scoring**: Calculates a compliance score (0-100) based on violation impact.
+- **Steps**: `Then The page accessibility score should be above 95`
+- **Fix Suggestions**: detailed logs with help URLs for every violation.
+
+
 
 ## Project Structure
 ```
