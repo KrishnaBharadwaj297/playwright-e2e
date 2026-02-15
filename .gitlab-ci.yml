@@ -1,0 +1,43 @@
+stages:
+  - test
+  - report
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - node_modules
+
+install_dependencies:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.49.0-jammy # Use appropriate version
+  script:
+    - npm ci
+
+test_execution:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.49.0-jammy
+  script:
+    - npm ci
+    - npm run test
+  artifacts:
+    when: always
+    paths:
+      - reports/
+    expire_in: 1 week
+  allow_failure: false
+
+generate_report:
+  stage: report
+  image: node:18
+  script:
+    - npm ci
+    - npm run report
+  needs: ["test_execution"]
+  artifacts:
+    paths:
+      - reports/cucumber_report.html
+    when: always
