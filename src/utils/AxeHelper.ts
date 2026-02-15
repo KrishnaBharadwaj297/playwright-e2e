@@ -9,12 +9,13 @@ export interface AccessibilityResult {
 }
 
 export class AxeHelper {
-    static async checkAccessibility(page: Page, tags: string[] = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']): Promise<AccessibilityResult> {
+    static async checkAccessibility(
+        page: Page,
+        tags: string[] = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']
+    ): Promise<AccessibilityResult> {
         try {
             Logger.info(`Scanning accessibility with tags: ${tags.join(', ')}`);
-            const accessibilityScanResults = await new AxeBuilder({ page })
-                .withTags(tags)
-                .analyze();
+            const accessibilityScanResults = await new AxeBuilder({ page }).withTags(tags).analyze();
 
             const violations = accessibilityScanResults.violations;
             const score = this.calculateScore(violations);
@@ -23,7 +24,7 @@ export class AxeHelper {
             if (violations.length > 0) {
                 Logger.error(`Accessibility Scan Failed! Score: ${score}/100`);
                 Logger.error(`Violations: ${violations.length}`);
-                suggestions.forEach(s => Logger.info(`Suggestion: ${s}`));
+                suggestions.forEach((s) => Logger.info(`Suggestion: ${s}`));
             } else {
                 Logger.info(`Accessibility Scan Passed! Score: ${score}/100`);
             }
@@ -43,17 +44,26 @@ export class AxeHelper {
         let penalty = 0;
         for (const violation of violations) {
             switch (violation.impact) {
-                case 'critical': penalty += 5; break;
-                case 'serious': penalty += 3; break;
-                case 'moderate': penalty += 1; break;
-                case 'minor': penalty += 0.5; break;
-                default: penalty += 1;
+                case 'critical':
+                    penalty += 5;
+                    break;
+                case 'serious':
+                    penalty += 3;
+                    break;
+                case 'moderate':
+                    penalty += 1;
+                    break;
+                case 'minor':
+                    penalty += 0.5;
+                    break;
+                default:
+                    penalty += 1;
             }
         }
         return Math.max(0, 100 - penalty);
     }
 
     private static extractSuggestions(violations: any[]): string[] {
-        return violations.map(v => `[${v.id}] ${v.help} - Fix: ${v.helpUrl}`);
+        return violations.map((v) => `[${v.id}] ${v.help} - Fix: ${v.helpUrl}`);
     }
 }

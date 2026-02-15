@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { Logger } from './Logger';
 import fs from 'fs-extra';
 import path from 'path';
@@ -60,7 +60,9 @@ export class VisualHelper {
         const imgExpected = PNG.sync.read(expectedBuffer);
 
         if (imgActual.width !== imgExpected.width || imgActual.height !== imgExpected.height) {
-            Logger.error(`Image dimensions do not match! Actual: ${imgActual.width}x${imgActual.height}, Expected: ${imgExpected.width}x${imgExpected.height}`);
+            Logger.error(
+                `Image dimensions do not match! Actual: ${imgActual.width}x${imgActual.height}, Expected: ${imgExpected.width}x${imgExpected.height}`
+            );
             throw new Error('Image dimensions mismatch');
         }
 

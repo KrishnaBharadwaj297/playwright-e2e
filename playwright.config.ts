@@ -7,11 +7,11 @@ export default defineConfig({
     expect: {
         toHaveScreenshot: {
             maxDiffPixelRatio: 0.2,
-            threshold: 0.2,     // Robustness against minor rendering diffs (AI-lite)
-            animations: 'disabled',
-        },
+            threshold: 0.2, // Robustness against minor rendering diffs (AI-lite)
+            animations: 'disabled'
+        }
     },
     use: {
-        screenshot: 'only-on-failure',
-    },
+        screenshot: 'only-on-failure'
+    }
 });
