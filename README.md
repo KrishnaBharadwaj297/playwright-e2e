@@ -13,7 +13,7 @@ Designed for scalability, ease of use, and comprehensive reporting.
   - Console summary
   - Allure Report (Rich visual reporting)
   - Cucumber HTML Report (Single file summary)
-- **CI/CD Ready**: GitLab CI configuration included.
+- **CI/CD Ready**: GitLab CI and Github actions configuration included.
 - **Accessibility Testing**: Integrated `axe-core` checks (Logs violations without failing by default).
 - **API Testing**: Built-in context for API request validation.
 
@@ -77,6 +77,13 @@ For complex logic, create a new class in `src/pages` extending `BasePage`.
 
 ### 3. Step Definitions (Optional)
 For custom logic, create a new `.ts` file in `src/steps`.
+
+### 4. API Testing
+We have included a dedicated example in `features/api.feature` and `src/steps/api.steps.ts` showing how to perform API testing:
+- **GET Request**: `Given I send a GET request to "URL"`
+- **POST Request**: `When I send a POST request to "URL" with body:`
+- **Validation**: `Then the response status should be {int}`
+
 
 ## Project Structure
 ```
