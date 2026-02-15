@@ -2,21 +2,31 @@ import axios from 'axios';
 import { Logger } from './Logger';
 import { Page } from '@playwright/test';
 
+export const SECURITY_CONFIG = {
+    GDPR_SELECTORS: [
+        '#onetrust-banner-sdk', // OneTrust
+        '.cookie-banner', // Generic
+        '#cookie-banner',
+        '[aria-label="cookieconsent"]',
+        'text=Accept Cookies',
+        'text=We use cookies'
+    ],
+    SECRET_PATTERNS: [
+        { name: 'AWS Access Key', regex: /(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}/ },
+        { name: 'Private Key', regex: /-----BEGIN PRIVATE KEY-----/ },
+        { name: 'Generic API Key', regex: /api_key\s*[:=]\s*['"]?[a-zA-Z0-9]{20,}['"]?/i },
+        { name: 'Bearer Token', regex: /Bearer\s+[a-zA-Z0-9\-._~+/]+=*/ }
+    ]
+};
+
 export class SecurityHelper {
     /**
      * Scans text content for potential secrets (API Keys, AWS Keys, Private Keys)
      * @param content text to scan (e.g. API response body)
      */
     static scanForSecrets(content: string): string[] {
-        const patterns = [
-            { name: 'AWS Access Key', regex: /(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}/ },
-            { name: 'Private Key', regex: /-----BEGIN PRIVATE KEY-----/ },
-            { name: 'Generic API Key', regex: /api_key\s*[:=]\s*['"]?[a-zA-Z0-9]{20,}['"]?/i },
-            { name: 'Bearer Token', regex: /Bearer\s+[a-zA-Z0-9\-._~+/]+=*/ }
-        ];
-
         const findings: string[] = [];
-        patterns.forEach((p) => {
+        SECURITY_CONFIG.SECRET_PATTERNS.forEach((p) => {
             if (p.regex.test(content)) {
                 findings.push(`Potential ${p.name} found!`);
             }
@@ -35,16 +45,7 @@ export class SecurityHelper {
      * @param page Playwright Page
      */
     static async checkGDPRBanner(page: Page): Promise<boolean> {
-        const commonSelectors = [
-            '#onetrust-banner-sdk', // OneTrust
-            '.cookie-banner', // Generic
-            '#cookie-banner',
-            '[aria-label="cookieconsent"]',
-            'text=Accept Cookies',
-            'text=We use cookies'
-        ];
-
-        for (const selector of commonSelectors) {
+        for (const selector of SECURITY_CONFIG.GDPR_SELECTORS) {
             if (await page.isVisible(selector).catch(() => false)) {
                 Logger.info(`[SECURITY] GDPR Banner found: ${selector}`);
                 return true;

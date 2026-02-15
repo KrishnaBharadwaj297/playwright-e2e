@@ -3,6 +3,13 @@ import { ICustomWorld } from '../support/CustomWorld';
 import { Logger } from '../utils/Logger';
 
 export class FormPage extends BasePage {
+    private readonly locators = {
+        alertButton: '#alert-btn',
+        nameInput: '#name',
+        emailInput: '#email',
+        submitButton: '#submit'
+    };
+
     constructor(world: ICustomWorld) {
         super(world);
     }
@@ -13,12 +20,12 @@ export class FormPage extends BasePage {
             Logger.info(`Dialog detected: ${dialog.message()}`);
             await dialog.accept();
         });
-        await this.clickElement('#alert-btn');
+        await this.clickElement(this.locators.alertButton);
     }
 
     async submitGenericForm(name: string, email: string) {
-        await this.fillText('#name', name);
-        await this.fillText('#email', email);
-        await this.clickElement('#submit');
+        await this.fillText(this.locators.nameInput, name);
+        await this.fillText(this.locators.emailInput, email);
+        await this.clickElement(this.locators.submitButton);
     }
 }
