@@ -311,6 +311,6 @@ sequenceDiagram
 - **Pre-commit**: Husky ensures code quality before commit.
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines....
 
 
